@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colores personalizados */
+:root {
+  --mint: #2fffc3;
+  --blue: #1e90ff;
+}
+
+.text-mint {
+  color: var(--mint);
+}
+
+.bg-mint {
+  background-color: var(--mint);
+}
