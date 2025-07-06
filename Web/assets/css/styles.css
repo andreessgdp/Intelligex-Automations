@@ -15,3 +15,262 @@
 .bg-mint {
   background-color: var(--mint);
 }
+
+/*Header*/
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.5s ease-out;
+}
+
+/*Hero Section*/
+.fade-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px; /* más alto para que se note */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 80%);
+  z-index: 1;
+}
+
+
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+:root {
+  --mint: #2fffc3;
+}
+
+.bg-mint {
+  background-color: var(--mint);
+}
+
+.from-mint {
+  --tw-gradient-from: var(--mint);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(47, 255, 195, 0));
+}
+
+
+/*Por que elegirnos?*/
+.card-effect::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-effect:hover::before {
+  opacity: 1;
+  animation: sheen 0.75s ease forwards;
+}
+
+@keyframes sheen {
+  0% {
+    transform: translate(-100%, -100%) rotate(25deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(25deg);
+  }
+}
+
+/*CTA Section*/
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-600 {
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.25;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+/*Testimonial Section*/
+/* Brillo sutil en las estrellas */
+@keyframes pulse-stars {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 0px #facc15); /* amarillo Tailwind */
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #facc15);
+  }
+}
+
+.animate-stars-pulse {
+  animation: pulse-stars 2s ease-in-out infinite;
+}
+
+/* Flash diagonal como en otras cards */
+.card-effect::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-effect:hover::before {
+  opacity: 1;
+  animation: sheen 0.75s ease forwards;
+}
+
+@keyframes sheen {
+  0% {
+    transform: translate(-100%, -100%) rotate(25deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(25deg);
+  }
+}
+
+
+/*Boton book a demo*/
+.cta-button {
+  animation: cta-bounce 4s infinite ease-in-out;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.cta-button:hover {
+  border-color: #2fffc3;
+  box-shadow: 0 0 20px #2fffc350;
+}
+
+/* Rebote cíclico para captar atención */
+@keyframes cta-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* Sheen / brillo en diagonal */
+.sheen::before {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  opacity: 0;
+}
+
+.cta-button:hover .sheen::before {
+  animation: sheen-animate 0.9s ease forwards;
+}
+
+@keyframes sheen-animate {
+  0% {
+    transform: translate(-100%, -100%) rotate(25deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+

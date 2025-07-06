@@ -15,37 +15,101 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./assets/js/script.js" defer></script>
+    <!-- SplitType (divide texto en letras) -->
+    <script src="https://unpkg.com/split-type"></script>
+
+    <!-- GSAP (animación) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
   </head>
   <body class="bg-black text-white font-sans">
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-bold text-mint">Intelligex</div>
-        <nav class="hidden md:flex gap-6">
-          <a href="#servicios" class="text-white hover:text-mint transition">Servicios</a>
-          <a href="#clientes" class="text-white hover:text-mint transition">Clientes</a>
-          <a href="#contacto" class="text-white hover:text-mint transition">Contacto</a>
-        </nav>
-      </div>
-    </header>
+  <header
+    class="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 animate-fade-in-down"
+  >
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo con enlace -->
+      <a href="#hero" class="flex items-center gap-2 text-2xl font-bold text-mint hover:opacity-80 transition">
+        <img src="./assets/img/Icon_NBG.png" alt="Logo Intelligex" class="h-20 w-auto" />
+        Intelligex Automations
+      </a>
 
-    <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center px-6" id="hero">
-      <div class="max-w-4xl text-center pt-32">
-        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">
-          Automatiza. Escala. Evoluciona.
-        </h1>
-        <p class="text-lg md:text-xl text-gray-400 mb-8">
-          La evolución inteligente de tu negocio empieza hoy.
-        </p>
+
+      <!-- Navegación -->
+      <nav class="hidden md:flex gap-6">
+        <a
+          href="#servicios"
+          class="text-white hover:text-mint transition duration-300 relative group"
+        >
+          Servicios
+          <span
+            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
+          ></span>
+        </a>
+        <a
+          href="#clientes"
+          class="text-white hover:text-mint transition duration-300 relative group"
+        >
+          Clientes
+          <span
+            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
+          ></span>
+        </a>
         <a
           href="#contacto"
-          class="inline-block bg-mint text-black font-semibold px-8 py-4 rounded-2xl hover:bg-mint/80 transition"
+          class="text-white hover:text-mint transition duration-300 relative group"
         >
-          Solicita tu diagnóstico gratuito
+          Contacto
+          <span
+            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
+          ></span>
         </a>
-      </div>
-    </section>
+      </nav>
+    </div>
+  </header>
+
+
+    <!-- Hero -->
+<section
+    id="hero"
+    class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden bg-cover bg-center fade-bottom"
+    style="background-image: url('./assets/img/background.png');"
+>
+  <!-- Overlay oscuro -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-4xl text-center pt-32">
+    <h1
+      id="hero-title"
+      class="text-4xl md:text-6xl font-extrabold text-white mb-6 opacity-0 animate-fade-in-up delay-200 cursor-default"
+    >
+      Automatiza Escala Evoluciona
+    </h1>
+
+
+    <p
+      class="text-lg md:text-xl text-gray-400 mb-8 opacity-0 animate-fade-in-up delay-500"
+    >
+      La evolución inteligente de tu negocio empieza hoy.
+    </p>
+    <a
+      href="#contacto"
+      class="cta-button inline-block font-semibold px-8 py-4 rounded-2xl text-black bg-mint transition-all duration-300 transform relative overflow-hidden group shadow-lg"
+    >
+      <span
+        class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+      ></span>
+      <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+        Solicita tu diagnóstico gratuito
+      </span>
+      <span class="sheen absolute inset-0 z-20 pointer-events-none"></span>
+    </a>
+
+
+  </div>
+</section>
+
     <!-- ¿Por qué elegirnos? -->
 <section id="valor" class="bg-black text-white py-20 px-6">
   <div class="max-w-6xl mx-auto text-center">
@@ -57,28 +121,31 @@
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <!-- Tarjeta 1 -->
+      <div class="card-effect bg-gray-900 relative overflow-hidden rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
         <h3 class="text-xl font-semibold text-white mb-3">Automatización a medida</h3>
-        <p class="text-gray-400">
-          Diseñamos sistemas que se adaptan a tu negocio, no al revés. Automatiza tareas repetitivas y gana tiempo real.
-        </p>
+          <p class="text-gray-400">
+            Diseñamos sistemas que se adaptan a tu negocio, no al revés. Automatiza tareas repetitivas y gana tiempo real.
+          </p>
       </div>
 
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+
+      <!-- Tarjeta 2 -->
+      <div class="card-effect bg-gray-900 relative overflow-hidden rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
         <h3 class="text-xl font-semibold text-white mb-3">Impulso con IA</h3>
-        <p class="text-gray-400">
-          Integramos inteligencia artificial para ayudarte a tomar mejores decisiones, optimizar procesos y reducir errores.
-        </p>
+          <p class="text-gray-400">
+            Integramos inteligencia artificial para ayudarte a tomar mejores decisiones, optimizar procesos y reducir errores.
+          </p>
       </div>
 
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <!-- Tarjeta 3 -->
+      <div class="card-effect bg-gray-900 relative overflow-hidden rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
         <h3 class="text-xl font-semibold text-white mb-3">Enfoque en resultados</h3>
         <p class="text-gray-400">
           Tu negocio crece si tú ganas. Nos enfocamos en soluciones prácticas, medibles y que generen impacto real desde el primer mes.
         </p>
       </div>
     </div>
-  </div>
 </section>
 <!-- Servicios -->
 <section id="servicios" class="bg-black text-white py-20 px-6">
@@ -90,7 +157,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
       <!-- Servicio 1 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-mint/10">
         <h3 class="text-xl font-semibold mb-3 text-white">Automatización de procesos repetitivos</h3>
         <p class="text-gray-400">
           Analizamos tus operaciones, identificamos tareas que consumen tiempo y dinero, y desarrollamos una solución a medida para que tu equipo gane eficiencia real.
@@ -98,7 +165,7 @@
       </div>
 
       <!-- Servicio 2 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-mint/10">
         <h3 class="text-xl font-semibold mb-3 text-white">Automatizaciones listas para usar</h3>
         <p class="text-gray-400">
           Usa agentes inteligentes que redactan correos, crean guiones para YouTube o generan ideas de campañas según tendencias actuales. Listos para ahorrar tiempo desde el día uno.
@@ -106,15 +173,15 @@
       </div>
 
       <!-- Servicio 3 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-mint/10">
         <h3 class="text-xl font-semibold mb-3 text-white">Desarrollo de chatbots a medida</h3>
         <p class="text-gray-400">
           Creamos asistentes virtuales personalizados para atención al cliente, generación de leads o soporte interno, integrados con tus canales de comunicación preferidos.
         </p>
       </div>
 
-      <!-- Servicio 4 (propuesta) -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition">
+      <!-- Servicio 4 -->
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-mint transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-mint/10">
         <h3 class="text-xl font-semibold mb-3 text-white">Integración de herramientas y plataformas</h3>
         <p class="text-gray-400">
           Conectamos tus sistemas entre sí: CRMs, hojas de cálculo, WhatsApp, Gmail, bases de datos... para que todo funcione como un solo ecosistema automatizado.
@@ -124,22 +191,38 @@
   </div>
 </section>
 <!-- CTA intermedia -->
-<section class="bg-gradient-to-r from-black via-gray-900 to-black py-20 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+<section
+  class="bg-gradient-to-r from-black via-gray-900 to-black py-20 px-6 relative overflow-hidden"
+>
+  <!-- Glow animado en el fondo -->
+  <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-mint/10 rounded-full blur-3xl animate-pulse-slow z-0"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <h2
+      class="text-3xl md:text-4xl font-bold mb-6 text-white opacity-0 animate-fade-in-up delay-200"
+    >
       ¿Listo para automatizar tu negocio?
     </h2>
-    <p class="text-gray-400 text-lg md:text-xl mb-8">
+    <p
+      class="text-gray-400 text-lg md:text-xl mb-8 opacity-0 animate-fade-in-up delay-400"
+    >
       Solicita un diagnóstico gratuito y descubre en qué áreas puedes ahorrar tiempo y aumentar tus ingresos hoy mismo.
     </p>
     <a
       href="#contacto"
-      class="inline-block bg-mint text-black font-semibold px-8 py-4 rounded-2xl hover:bg-mint/80 transition"
+      class="cta-button inline-block font-semibold px-8 py-4 rounded-2xl text-black bg-mint transition-all duration-300 transform relative overflow-hidden group shadow-lg"
     >
-      Empezar ahora
+      <span
+        class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+      ></span>
+      <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+        Empezar ahora
+      </span>
+      <span class="sheen absolute inset-0 z-20 pointer-events-none"></span>
     </a>
   </div>
 </section>
+
 <!-- Clientes / Testimonios -->
 <section id="clientes" class="bg-black text-white py-20 px-6">
   <div class="max-w-6xl mx-auto text-center">
@@ -150,31 +233,32 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
       <!-- Testimonio 1 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-        <div class="flex items-center mb-3">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
+        <div class="flex items-center mb-3 animate-stars-pulse">
           <div class="text-yellow-400 text-xl">★★★★★</div>
         </div>
-        <p class="text-gray-300">
+        <p class="text-gray-300 italic">
           "Increíble cómo lograron automatizar mis tareas diarias. Ahora ahorro horas cada semana. Todo funciona perfecto."
         </p>
       </div>
 
+
       <!-- Testimonio 2 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-        <div class="flex items-center mb-3">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
+        <div class="flex items-center mb-3 animate-stars-pulse">
           <div class="text-yellow-400 text-xl">★★★★☆</div>
         </div>
-        <p class="text-gray-300">
+        <p class="text-gray-300 italic">
           "Muy buena atención y rápida implementación. Me gustó que todo fue personalizado según mis necesidades."
         </p>
       </div>
 
       <!-- Testimonio 3 -->
-      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-        <div class="flex items-center mb-3">
+      <div class="card-effect relative overflow-hidden bg-gray-900 rounded-2xl p-6 border border-gray-800 transition-all duration-300 hover:border-mint hover:shadow-lg hover:shadow-mint/10 hover:-translate-y-1">
+        <div class="flex items-center mb-3 animate-stars-pulse">
           <div class="text-yellow-400 text-xl">★★★★★</div>
         </div>
-        <p class="text-gray-300">
+        <p class="text-gray-300 italic">
           "El chatbot que me desarrollaron me está generando leads todos los días. ¡Vale totalmente la pena!"
         </p>
       </div>
@@ -182,61 +266,92 @@
   </div>
 </section>
 <!-- Contacto -->
-<section id="contacto" class="bg-black text-white py-20 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-mint">Hablemos</h2>
-    <p class="text-gray-400 text-lg md:text-xl mb-12">
+<section id="contacto" class="bg-black text-white py-20 px-6 relative overflow-hidden">
+  <div class="absolute -top-32 -left-20 w-[400px] h-[400px] bg-mint/10 rounded-full blur-3xl animate-pulse-slow"></div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-mint opacity-0 animate-fade-in-up delay-200">Hablemos</h2>
+    <p class="text-gray-400 text-lg md:text-xl mb-12 opacity-0 animate-fade-in-up delay-400">
       ¿Tienes una idea o desafío en mente? Envíanos un mensaje y te responderemos lo antes posible.
     </p>
 
-    <form class="space-y-6 text-left">
+    <form
+      id="contact-form"
+      class="space-y-6 text-left opacity-0 animate-fade-in-up delay-600"
+    >
       <div>
-        <label for="nombre" class="block text-sm font-medium text-gray-300">Nombre</label>
+        <label for="nombre" class="block text-sm font-medium text-gray-300 mb-1">Nombre</label>
         <input
           type="text"
           id="nombre"
           name="nombre"
           required
-          class="mt-1 block w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint"
+          class="mt-1 block w-full bg-gray-900/70 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint transition-all duration-200 focus:ring-2 focus:ring-mint hover:shadow-md hover:shadow-mint/10"
           placeholder="Tu nombre completo"
         />
       </div>
 
       <div>
-        <label for="correo" class="block text-sm font-medium text-gray-300">Correo electrónico</label>
+        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Correo electrónico</label>
         <input
           type="email"
-          id="correo"
-          name="correo"
+          id="email"
+          name="email"
           required
-          class="mt-1 block w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint"
+          class="mt-1 block w-full bg-gray-900/70 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint transition-all duration-200 focus:ring-2 focus:ring-mint hover:shadow-md hover:shadow-mint/10"
           placeholder="tucorreo@ejemplo.com"
         />
       </div>
 
       <div>
-        <label for="mensaje" class="block text-sm font-medium text-gray-300">Mensaje</label>
+        <label for="mensaje" class="block text-sm font-medium text-gray-300 mb-1">Mensaje</label>
         <textarea
           id="mensaje"
-          name="mensaje"
+          name="message"
           rows="5"
           required
-          class="mt-1 block w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint"
+          class="mt-1 block w-full bg-gray-900/70 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-mint transition-all duration-200 focus:ring-2 focus:ring-mint hover:shadow-md hover:shadow-mint/10"
           placeholder="¿En qué podemos ayudarte?"
         ></textarea>
       </div>
 
-      <div class="text-center">
+      <div class="text-center pt-4">
         <button
           type="submit"
-          class="bg-mint text-black font-semibold px-8 py-4 rounded-2xl hover:bg-mint/80 transition"
+          class="inline-block font-semibold px-8 py-4 rounded-2xl text-black bg-mint border-2 border-mint transition-all duration-300 transform hover:scale-105 relative overflow-hidden group shadow-lg hover:shadow-mint/20"
         >
-          Enviar mensaje
+          <span
+            class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+          ></span>
+          <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+            Enviar mensaje
+          </span>
         </button>
       </div>
     </form>
   </div>
 </section>
+
+<!-- Modal de éxito -->
+<div
+  id="success-modal"
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden"
+>
+  <div
+    class="bg-gray-900 border border-mint text-white rounded-2xl p-8 max-w-md text-center scale-95 opacity-0 transition-all duration-300"
+    id="success-modal-content"
+  >
+    <h3 class="text-2xl font-semibold mb-4 text-mint">¡Mensaje enviado!</h3>
+    <p class="text-gray-300 mb-6">Gracias por contactarnos. Te responderemos muy pronto.</p>
+    <button
+      id="close-modal"
+      class="bg-mint text-black font-semibold px-6 py-2 rounded-xl hover:bg-mint/80 transition"
+    >
+      Cerrar
+    </button>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer class="bg-gray-950 border-t border-gray-800 py-10 px-6 text-gray-400 text-sm">
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
@@ -245,33 +360,50 @@
     <div class="flex flex-col items-center md:items-start gap-3">
       <!-- Políticas -->
       <div class="flex gap-4">
-        <a href="#" class="hover:text-mint transition">Política de privacidad</a>
-        <a href="#" class="hover:text-mint transition">Términos y condiciones</a>
+        <a href="#" class="hover:text-mint hover:underline transition duration-300">Política de privacidad</a>
+        <a href="#" class="hover:text-mint hover:underline transition duration-300">Términos y condiciones</a>
       </div>
       
       <!-- Marca y derechos -->
-      <p class="text-center md:text-left">
-        &copy; 2025 Intelligex Automations. Todos los derechos reservados.
+      <p class="text-center md:text-left hover:opacity-80 transition duration-300">
+        &copy; 2025 <span class="hover:text-mint transition duration-300">Intelligex Automations</span>. Todos los derechos reservados.
       </p>
     </div>
 
     <!-- Redes sociales -->
     <div class="flex gap-5 justify-center md:justify-end w-full md:w-auto">
-      <a href="#" aria-label="Instagram" class="hover:text-mint transition text-xl">
+      <a
+        href="#"
+        aria-label="Instagram"
+        class="text-xl transition-all duration-300 hover:text-mint hover:scale-110 hover:drop-shadow-[0_0_4px_var(--mint)]"
+      >
         <i class="fab fa-instagram"></i>
       </a>
-      <a href="#" aria-label="Twitter" class="hover:text-mint transition text-xl">
+      <a
+        href="#"
+        aria-label="Twitter"
+        class="text-xl transition-all duration-300 hover:text-mint hover:scale-110 hover:drop-shadow-[0_0_4px_var(--mint)]"
+      >
         <i class="fab fa-twitter"></i>
       </a>
-      <a href="#" aria-label="TikTok" class="hover:text-mint transition text-xl">
+      <a
+        href="#"
+        aria-label="TikTok"
+        class="text-xl transition-all duration-300 hover:text-mint hover:scale-110 hover:drop-shadow-[0_0_4px_var(--mint)]"
+      >
         <i class="fab fa-tiktok"></i>
       </a>
-      <a href="#" aria-label="LinkedIn" class="hover:text-mint transition text-xl">
+      <a
+        href="#"
+        aria-label="LinkedIn"
+        class="text-xl transition-all duration-300 hover:text-mint hover:scale-110 hover:drop-shadow-[0_0_4px_var(--mint)]"
+      >
         <i class="fab fa-linkedin"></i>
       </a>
     </div>
   </div>
 </footer>
+
 
 
   </body>
