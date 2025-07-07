@@ -9,8 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const formData = new FormData(form);
 
+    // Extraer datos para Make
+    const data = {
+      nombre: formData.get("nombre"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
     try {
-      const response = await fetch("https://formspree.io/f/mkgbaqwp", {
+      // Enviar a Formspree
+      const formspreeResponse = await fetch("https://formspree.io/f/mkgbaqwp", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -18,7 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: formData,
       });
 
-      if (response.ok) {
+      // Enviar también a Make Webhook
+      const makeResponse = await fetch("https://hook.eu2.make.com/rghfz4uztbq6xw8gpmj2y58e68tt33uu", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (formspreeResponse.ok && makeResponse.ok) {
         form.reset();
         modal.classList.remove("hidden");
         // Activar animación
@@ -41,12 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.classList.add("hidden");
     }, 300);
   });
-    const title = document.getElementById("hero-title");
 
-  // Divide el texto en letras
+  // Animación del título
+  const title = document.getElementById("hero-title");
   const split = new SplitType("#hero-title", { types: "chars" });
 
-  // Al pasar el mouse, animamos cada letra con GSAP
   title.addEventListener("mouseenter", () => {
     gsap.to(split.chars, {
       color: "#2fffc3",
