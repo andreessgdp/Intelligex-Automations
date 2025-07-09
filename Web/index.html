@@ -26,49 +26,64 @@
   </head>
   <body class="bg-black text-white font-sans">
     <!-- Header -->
-  <header
-    class="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 animate-fade-in-down"
-  >
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <!-- Logo con enlace -->
-      <a href="#hero" class="flex items-center gap-2 text-2xl font-bold text-mint hover:opacity-80 transition">
-        <img src="./assets/img/Icon_NBG.png" alt="Logo Intelligex" class="h-20 w-auto" />
-        Intelligex Automations
+<header class="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 animate-fade-in-down">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    
+    <!-- Logo con enlace -->
+    <a href="#hero" class="flex items-center gap-3 group">
+      <img
+        src="./assets/img/Icon_NBG.png"
+        alt="Logo Intelligex"
+        class="h-14 w-auto transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3 group-hover:drop-shadow-[0_0_10px_#2fffc3]"
+      />
+      <div class="leading-tight">
+        <span class="text-2xl font-extrabold text-mint block group-hover:opacity-90 transition">
+          Intelligex
+        </span>
+        <span class="text-sm text-gray-400 tracking-wide group-hover:text-mint transition">
+          Automations
+        </span>
+      </div>
+    </a>
+
+    <!-- Navegación -->
+    <nav class="hidden md:flex items-center gap-6">
+      <a
+        href="#servicios"
+        class="text-white hover:text-mint transition duration-300 relative group"
+      >
+        Servicios
+        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a
+        href="#clientes"
+        class="text-white hover:text-mint transition duration-300 relative group"
+      >
+        Clientes
+        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a
+        href="#contacto"
+        class="text-white hover:text-mint transition duration-300 relative group"
+      >
+        Contacto
+        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
       </a>
 
+      <!-- Botón CTA -->
+      <a
+        href="#contacto"
+        class="ml-4 inline-block font-semibold px-5 py-2 rounded-xl text-black bg-mint border-2 border-mint transition-all duration-300 transform hover:scale-105 relative overflow-hidden group shadow-md hover:shadow-mint/20"
+      >
+        <span class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+        <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+          Diagnóstico gratuito
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
 
-      <!-- Navegación -->
-      <nav class="hidden md:flex gap-6">
-        <a
-          href="#servicios"
-          class="text-white hover:text-mint transition duration-300 relative group"
-        >
-          Servicios
-          <span
-            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
-          ></span>
-        </a>
-        <a
-          href="#clientes"
-          class="text-white hover:text-mint transition duration-300 relative group"
-        >
-          Clientes
-          <span
-            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
-          ></span>
-        </a>
-        <a
-          href="#contacto"
-          class="text-white hover:text-mint transition duration-300 relative group"
-        >
-          Contacto
-          <span
-            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"
-          ></span>
-        </a>
-      </nav>
-    </div>
-  </header>
 
 
     <!-- Hero -->
@@ -362,8 +377,8 @@
     <div class="flex flex-col items-center md:items-start gap-3">
       <!-- Políticas -->
       <div class="flex gap-4">
-        <a href="#" class="hover:text-mint hover:underline transition duration-300">Política de privacidad</a>
-        <a href="#" class="hover:text-mint hover:underline transition duration-300">Términos y condiciones</a>
+        <a href="politica-privacidad.html" class="hover:text-mint hover:underline transition duration-300">Política de privacidad</a>
+        <a href="terminos.html" class="hover:text-mint hover:underline transition duration-300">Términos y condiciones</a>
       </div>
       
       <!-- Marca y derechos -->
