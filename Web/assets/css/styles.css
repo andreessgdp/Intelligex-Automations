@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* En tu Tailwind config o archivo CSS */
+@layer utilities {
+  .scale-y-100 {
+    transform: scaleY(1);
+  }
+  .scale-y-0 {
+    transform: scaleY(0);
+  }
+}
+
 /* Colores personalizados */
 :root {
   --mint: #2fffc3;

@@ -5,84 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intelligex Automations</title>
     <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-...tu-hash..."
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-    <!-- Para favicon.ico -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/x-icon" href="./assets/img/Icon_NBG.ico" />
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./assets/js/script.js" defer></script>
-    <!-- SplitType (divide texto en letras) -->
     <script src="https://unpkg.com/split-type"></script>
-
-    <!-- GSAP (animación) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
   </head>
   <body class="bg-black text-white font-sans">
-    <!-- Header -->
-<header class="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 animate-fade-in-down">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    
-    <!-- Logo con enlace -->
-    <a href="#hero" class="flex items-center gap-3 group">
-      <img
-        src="./assets/img/Icon_NBG.png"
-        alt="Logo Intelligex"
-        class="h-14 w-auto transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3 group-hover:drop-shadow-[0_0_10px_#2fffc3]"
-      />
-      <div class="leading-tight">
-        <span class="text-2xl font-extrabold text-mint block group-hover:opacity-90 transition">
-          Intelligex
-        </span>
-        <span class="text-sm text-gray-400 tracking-wide group-hover:text-mint transition">
-          Automations
-        </span>
+    <header class="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 animate-fade-in-down">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#hero" class="flex items-center gap-3 group">
+          <img src="./assets/img/Icon_NBG.png" alt="Logo Intelligex" class="h-12 sm:h-14 w-auto transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3 group-hover:drop-shadow-[0_0_10px_#2fffc3]" />
+          <div class="leading-tight">
+            <span class="text-xl sm:text-2xl font-extrabold text-mint block group-hover:opacity-90 transition">Intelligex</span>
+            <span class="text-xs sm:text-sm text-gray-400 tracking-wide group-hover:text-mint transition">Automations</span>
+          </div>
+        </a>
+
+        <button id="menu-toggle" class="md:hidden text-mint text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="#servicios" class="text-white hover:text-mint transition relative group">Servicios<span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="#clientes" class="text-white hover:text-mint transition relative group">Clientes<span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="#contacto" class="text-white hover:text-mint transition relative group">Contacto<span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="#contacto" class="ml-4 inline-block font-semibold px-5 py-2 rounded-xl text-black bg-mint border-2 border-mint transition-all duration-300 transform hover:scale-105 relative overflow-hidden group shadow-md hover:shadow-mint/20">
+            <span class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
+            <span class="relative z-10 group-hover:text-white transition-colors duration-300">Diagnóstico gratuito</span>
+          </a>
+        </nav>
       </div>
-    </a>
+    <div
+      id="mobile-menu"
+      class="md:hidden flex flex-col items-stretch divide-y divide-gray-800 transition-all duration-300 transform scale-y-0 origin-top opacity-0 pointer-events-none"
+    >
 
-    <!-- Navegación -->
-    <nav class="hidden md:flex items-center gap-6">
-      <a
-        href="#servicios"
-        class="text-white hover:text-mint transition duration-300 relative group"
-      >
-        Servicios
-        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
-      </a>
-      <a
-        href="#clientes"
-        class="text-white hover:text-mint transition duration-300 relative group"
-      >
-        Clientes
-        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
-      </a>
-      <a
-        href="#contacto"
-        class="text-white hover:text-mint transition duration-300 relative group"
-      >
-        Contacto
-        <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-mint transition-all duration-300 group-hover:w-full"></span>
-      </a>
 
-      <!-- Botón CTA -->
-      <a
-        href="#contacto"
-        class="ml-4 inline-block font-semibold px-5 py-2 rounded-xl text-black bg-mint border-2 border-mint transition-all duration-300 transform hover:scale-105 relative overflow-hidden group shadow-md hover:shadow-mint/20"
-      >
-        <span class="absolute inset-0 bg-gradient-to-r from-mint to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
-        <span class="relative z-10 group-hover:text-white transition-colors duration-300">
-          Diagnóstico gratuito
-        </span>
-      </a>
-    </nav>
-  </div>
-</header>
+        <a href="#servicios" class="text-white hover:text-mint transition">Servicios</a>
+        <a href="#clientes" class="text-white hover:text-mint transition">Clientes</a>
+        <a href="#contacto" class="text-white hover:text-mint transition">Contacto</a>
+      </div>
+
+    </header>
+
 
 
 
@@ -422,6 +389,24 @@
 </footer>
 
 
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
 
+    menuToggle.addEventListener("click", () => {
+      const isVisible = mobileMenu.classList.contains("scale-y-100");
+
+      if (isVisible) {
+        // Ocultar menú con animación
+        mobileMenu.classList.remove("scale-y-100", "opacity-100", "pointer-events-auto");
+        mobileMenu.classList.add("scale-y-0", "opacity-0", "pointer-events-none");
+      } else {
+        // Mostrar menú con animación
+        mobileMenu.classList.remove("scale-y-0", "opacity-0", "pointer-events-none");
+        mobileMenu.classList.add("scale-y-100", "opacity-100", "pointer-events-auto");
+      }
+    });
+
+    </script>
   </body>
 </html>
