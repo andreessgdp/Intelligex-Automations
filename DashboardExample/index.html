@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda Peluquería</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-950 text-neutral-100">
+  <header class="sticky top-0 z-10 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
+    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <h1 class="text-lg font-semibold">Agenda Peluquería</h1>
+      <div class="flex items-center gap-2">
+        <button id="refreshBtn" class="px-3 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-sm">Actualizar</button>
+        <button id="extendBtn" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-sm font-medium">+15 días</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-xl mx-auto px-4 py-4">
+    <p id="status" class="text-xs text-neutral-400 mb-3">Cargando…</p>
+
+    <section id="hoySection" class="mb-6">
+      <h2 class="text-base font-medium mb-2">Hoy</h2>
+      <div id="hoyList" class="space-y-2"></div>
+    </section>
+
+    <section id="proxSection">
+      <h2 class="text-base font-medium mb-2">Próximos 7 días</h2>
+      <div id="proxList" class="space-y-4"></div>
+    </section>
+  </main>
+
+  <template id="itemTpl">
+    <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-3">
+      <div class="flex items-center justify-between">
+        <div class="text-sm font-medium"></div>
+        <div class="text-xs text-neutral-400"></div>
+      </div>
+      <div class="mt-1 text-sm text-neutral-200"></div>
+    </div>
+  </template>
+
+  <script>
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzO71ktivEBrHNE5uvy4IlO82x5E4bWNyCibpOiEstUqiJTnr9BZtYmulkc_IfiviaC/exec'; // e.g. https://script.google.com/macros/s/XXXX/exec
+    const EXTEND_TOKEN = 'F*u|SwN==F08]K:Ac9`viRQ30h/';
+    const TZ = 'Europe/Madrid';
+
+    const fmtDate = (iso) => {
+      const [y,m,d] = iso.split('-').map(Number);
+      const dt = new Date(y, m-1, d);
+      return new Intl.DateTimeFormat('es-ES', { timeZone: TZ, day:'2-digit', month:'2-digit', year:'numeric' }).format(dt);
+    };
+    const fmtTime = (hhmm) => hhmm; // ya viene HH:mm
+    const todayISO = () => {
+      const now = new Date();
+      const y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+      return `${y}-${m}-${d}`;
+    };
+    const plusDaysISO = (iso, days) => {
+      const [y,m,d] = iso.split('-').map(Number);
+      const dt = new Date(y, m-1, d);
+      dt.setDate(dt.getDate() + days);
+      const yy = dt.getFullYear(), mm = String(dt.getMonth()+1).padStart(2,'0'), dd = String(dt.getDate()).padStart(2,'0');
+      return `${yy}-${mm}-${dd}`;
+    };
+
+    const statusEl = document.getElementById('status');
+    const hoyList = document.getElementById('hoyList');
+    const proxList = document.getElementById('proxList');
+    const itemTpl = document.getElementById('itemTpl');
+
+    let lastUpdateTs = null;
+    let refreshTimer = null;
+    let counterTimer = null;
+
+    function setStatus(text) {
+      statusEl.textContent = text;
+    }
+
+    function startCounter() {
+      if (counterTimer) clearInterval(counterTimer);
+      counterTimer = setInterval(() => {
+        if (!lastUpdateTs) return;
+        const secs = Math.floor((Date.now() - lastUpdateTs) / 1000);
+        setStatus(`Actualizado hace ${secs}s`);
+      }, 1000);
+    }
+
+    async function fetchBooked() {
+      try {
+        const from = todayISO();
+        const to = plusDaysISO(from, 7);
+        const url = `${GAS_URL}?action=booked&from=${from}&to=${to}`;
+        const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || 'Error en respuesta');
+        renderData(json.data || []);
+        lastUpdateTs = Date.now();
+        startCounter();
+      } catch (err) {
+        console.error(err);
+        setStatus('No se pudo cargar. Reintentar.');
+      }
+    }
+
+    function renderData(rows) {
+      // separar hoy vs próximos
+      const tISO = todayISO();
+      const hoy = [];
+      const otros = {};
+
+      rows.forEach(r => {
+        if (r.Fecha === tISO) {
+          hoy.push(r);
+        } else {
+          (otros[r.Fecha] ??= []).push(r);
+        }
+      });
+
+      // render hoy
+      hoyList.innerHTML = '';
+      if (hoy.length === 0) {
+        hoyList.innerHTML = `<div class="text-sm text-neutral-400">Sin citas agendadas para hoy.</div>`;
+      } else {
+        hoy.forEach(r => hoyList.appendChild(renderItem(r)));
+      }
+
+      // render próximos agrupados por fecha
+      proxList.innerHTML = '';
+      const dates = Object.keys(otros).sort();
+      if (dates.length === 0) {
+        proxList.innerHTML = `<div class="text-sm text-neutral-400">Sin citas en los próximos días.</div>`;
+      } else {
+        dates.forEach(dateISO => {
+          const group = document.createElement('div');
+          const header = document.createElement('div');
+          header.className = 'text-sm text-neutral-300 mb-2';
+          header.textContent = fmtDate(dateISO);
+          group.appendChild(header);
+
+          (otros[dateISO] || []).forEach(r => group.appendChild(renderItem(r)));
+          proxList.appendChild(group);
+        });
+      }
+    }
+
+    function renderItem(r) {
+      const node = itemTpl.content.firstElementChild.cloneNode(true);
+
+      node.querySelector('div > div:first-child').textContent = r.Hora ? fmtTime(r.Hora) : '—';
+      node.querySelector('div > div:last-child').textContent = r.Telefono ? `Tel: ${r.Telefono}` : '';
+      node.querySelector('.mt-1').textContent = r.Cliente || '(Sin nombre)';
+      return node;
+    }
+
+    async function extendDays(days = 15) {
+      try {
+        const url = `${GAS_URL}?action=extendDays&days=${days}&token=${encodeURIComponent(EXTEND_TOKEN)}`;
+        const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || 'No se pudo extender');
+        // refrescamos listado
+        await fetchBooked();
+        alert(`Añadidas ${json.added} franjas (plantilla del ${json.latestBase})`);
+      } catch (err) {
+        console.error(err);
+        alert('Error al añadir días.');
+      }
+    }
+
+    // eventos
+    document.getElementById('refreshBtn').addEventListener('click', fetchBooked);
+    document.getElementById('extendBtn').addEventListener('click', () => extendDays(15));
+
+    // auto-refresh cada 30s
+    function startAutoRefresh() {
+      if (refreshTimer) clearInterval(refreshTimer);
+      refreshTimer = setInterval(fetchBooked, 30000);
+    }
+
+    // init
+    fetchBooked();
+    startAutoRefresh();
+  </script>
+</body>
+</html>
