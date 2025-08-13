@@ -41,6 +41,25 @@
     </div>
   </template>
 
+      <!-- Loading Modal -->
+  <div id="loadingModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm"
+      role="dialog" aria-modal="true" aria-labelledby="loadingTitle" aria-describedby="loadingSubtitle">
+    <div class="w-80 rounded-2xl border border-neutral-800 bg-neutral-900/95 p-5 shadow-xl">
+      <div class="flex items-center gap-3">
+        <!-- Spinner -->
+        <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle>
+          <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="opacity-75"></path>
+        </svg>
+        <div>
+          <p id="loadingTitle" class="text-sm font-medium">Añadiendo 15 días…</p>
+          <p id="loadingSubtitle" class="text-xs text-neutral-400">Esto puede tardar unos segundos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbzO71ktivEBrHNE5uvy4IlO82x5E4bWNyCibpOiEstUqiJTnr9BZtYmulkc_IfiviaC/exec'; // e.g. https://script.google.com/macros/s/XXXX/exec
     const EXTEND_TOKEN = 'F*u|SwN==F08]K:Ac9`viRQ30h/';
@@ -70,12 +89,45 @@
     const proxList = document.getElementById('proxList');
     const itemTpl = document.getElementById('itemTpl');
 
+    // ===== Loading modal helpers =====
+    const loadingModal = document.getElementById('loadingModal');
+    const loadingTitle = document.getElementById('loadingTitle');
+    const loadingSubtitle = document.getElementById('loadingSubtitle');
+
     let lastUpdateTs = null;
     let refreshTimer = null;
     let counterTimer = null;
 
     function setStatus(text) {
       statusEl.textContent = text;
+    }
+
+    function showLoading({ title = 'Cargando…', subtitle = 'Un momento, por favor.' } = {}) {
+      if (loadingTitle) loadingTitle.textContent = title;
+      if (loadingSubtitle) loadingSubtitle.textContent = subtitle;
+      loadingModal.classList.remove('hidden');
+      loadingModal.classList.add('flex');
+      // bloquea scroll de fondo
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function hideLoading() {
+      loadingModal.classList.remove('flex');
+      loadingModal.classList.add('hidden');
+      // restablece scroll
+      document.documentElement.style.overflow = '';
+    }
+
+    // desactiva/activa botones mientras dura la operación
+    function disableButtons(disabled) {
+      const extendBtn = document.getElementById('extendBtn');
+      const refreshBtn = document.getElementById('refreshBtn');
+      [extendBtn, refreshBtn].forEach(btn => {
+        if (!btn) return;
+        btn.disabled = disabled;
+        btn.classList.toggle('opacity-50', disabled);
+        btn.classList.toggle('pointer-events-none', disabled);
+      });
     }
 
     function startCounter() {
@@ -96,14 +148,36 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || 'Error en respuesta');
+
         renderData(json.data || []);
         lastUpdateTs = Date.now();
         startCounter();
+        return true;                  // <--- éxito
       } catch (err) {
         console.error(err);
         setStatus('No se pudo cargar. Reintentar.');
+        return false;                 // <--- error
       }
     }
+
+    async function manualRefresh() {
+      try {
+        // pausa auto-refresh para evitar solaparse con la actualización manual
+        if (refreshTimer) { clearInterval(refreshTimer); refreshTimer = null; }
+
+        showLoading({ title: 'Actualizando…', subtitle: 'Sincronizando con Google Sheets…' });
+        disableButtons(true);
+
+        const ok = await fetchBooked();
+        if (!ok) alert('No se pudo actualizar. Reintentar.');
+      } finally {
+        hideLoading();
+        disableButtons(false);
+        startAutoRefresh(); // reanuda auto-refresh
+      }
+    }
+
+
 
     function renderData(rows) {
       // separar hoy vs próximos
@@ -157,21 +231,31 @@
 
     async function extendDays(days = 15) {
       try {
+        showLoading({ title: `Añadiendo ${days} días…`, subtitle: 'No cierres esta ventana.' });
+        disableButtons(true);
+
         const url = `${GAS_URL}?action=extendDays&days=${days}&token=${encodeURIComponent(EXTEND_TOKEN)}`;
         const res = await fetch(url, { method: 'GET', cache: 'no-store' });
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || 'No se pudo extender');
-        // refrescamos listado
+
+        // refrescamos el listado tras la inserción
         await fetchBooked();
-        alert(`Añadidas ${json.added} franjas (plantilla del ${json.latestBase})`);
+
+        // feedback rápido
+        alert(`Añadidas ${json.added} franjas (base: ${json.baseFromLastRow || json.latestBase || 'N/D'})`);
       } catch (err) {
         console.error(err);
         alert('Error al añadir días.');
+      } finally {
+        hideLoading();
+        disableButtons(false);
       }
     }
 
+
     // eventos
-    document.getElementById('refreshBtn').addEventListener('click', fetchBooked);
+    document.getElementById('refreshBtn').addEventListener('click', manualRefresh);
     document.getElementById('extendBtn').addEventListener('click', () => extendDays(15));
 
     // auto-refresh cada 30s
@@ -184,5 +268,6 @@
     fetchBooked();
     startAutoRefresh();
   </script>
+
 </body>
 </html>
